@@ -34,10 +34,10 @@ namespace GaloDaVelha
         {
             for(int i= 0; i < 4; i++)
             {
-                //rows should be all 0 but for testing they go from 1 to 4
+                
                 for(int j = 0; j< 4; j ++)
                 {
-                    board[i,j] = j +1;
+                    board[i,j] = 0;
                 }
             }
             return board;
