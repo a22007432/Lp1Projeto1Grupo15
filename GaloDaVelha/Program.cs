@@ -4,9 +4,14 @@ namespace GaloDaVelha
 {
     class Program
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Game game = new Game();
+            game.StartGame();
         }
     }
 }
