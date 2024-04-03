@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace GaloDaVelha
 {
     /// <summary>
@@ -11,6 +12,12 @@ namespace GaloDaVelha
     /// </summary>
     public class Game
     {
+        public Pieces mypiece = 0;
+
+        public int tmpN;
+
+        //public char tmpPiece;
+
         //Circle CHars
         public char cLargeHole = '\u25CE';
         public char cSmallHole = '\u2609';
@@ -33,16 +40,19 @@ namespace GaloDaVelha
         //Possible method to start the game
         public void StartGame()
         {
+            
+            
             SetBoard(board);
 
-            Console.WriteLine(cLargeHole);
+            //testcode for chars
+            /*Console.WriteLine(cLargeHole);
             Console.WriteLine(cSmallHole);
             Console.WriteLine(cSmall);
             Console.WriteLine(cLarge);
             Console.WriteLine(sSmallHole);
             Console.WriteLine(sLargeHole);
             Console.WriteLine(sSmall);
-            Console.WriteLine(sLarge);
+            Console.WriteLine(sLarge);*/
 
 
             //test code for array
@@ -53,6 +63,13 @@ namespace GaloDaVelha
                     Console.WriteLine(board[i,j]);
                 }
             }*/
+            Console.WriteLine("pls insert an int");
+            tmpN = int.Parse(Console.ReadLine());
+            
+            Console.WriteLine(SetPiece(tmpN));
+
+
+            
             
         }
 
@@ -68,6 +85,31 @@ namespace GaloDaVelha
                 }
             }
             return board;
+        }
+
+        //This method returns which piece it is (currently 
+        //does'nt return anything)
+        
+        public char SetPiece(int pieceInt)
+        {
+            //ns que private static ou public quero returnar este char usando os
+            //enum
+
+            char tmpPiece = '\0';
+            switch(pieceInt)
+            {
+                case 1:
+                    tmpPiece = (char) Pieces.BigSquare;
+                    break;
+                case 0:
+                    tmpPiece = (char) Pieces.Null;
+                    break;
+                default:
+                    break;
+            }
+
+            //Console.WriteLine(tmpPiece);
+            return tmpPiece;
         }
 
     }

@@ -9,17 +9,19 @@ namespace GaloDaVelha
     [Flags]
     public enum Pieces
     {
-        BigSquare = 1 << 0,
-        SmallSquare = 1 << 1,
+        //BigSquare = 1 << 0,
+        Null = 'X' << 0,
+        BigSquare = '\u2610',
+        SmallSquare = 1 << 2,
 
-        BigSquareH = 1 << 2,
-        SmallSquareH = 1 << 3,
+        BigSquareH = 1 << 3,
+        SmallSquareH = 1 << 4,
 
-        BigCircle = 1 << 4,
-        SmallCircle = 1 << 5,
+        BigCircle = 1 << 5,
+        SmallCircle = 1 << 6,
 
-        BigCircleH = 1 << 6,
-        SmallCircleH = 1 << 7,
+        BigCircleH = 1 << 7,
+        SmallCircleH = 1 << 8,
 
     }
 }
