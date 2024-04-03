@@ -19,16 +19,18 @@ namespace GaloDaVelha
         //public char tmpPiece;
 
         //Circle CHars
-        public char cLargeHole = '\u25CE';
+        /*public char cLargeHole = '\u25CE';
         public char cSmallHole = '\u2609';
         public char cLarge = '\u25CB';
         public char cSmall = '\u25E6';
+        */
         
         //Square chars (large with hole might need a better 1)
-        public char sLargeHole = '\u2612';
+        /*public char sLargeHole = '\u2612';
         public char sSmallHole = '\u25C8';
         public char sLarge = '\u2610';
         public char sSmall = '\u25C7';
+        */
         
 
         //Array to hold the board values
@@ -54,7 +56,6 @@ namespace GaloDaVelha
             Console.WriteLine(sSmall);
             Console.WriteLine(sLarge);*/
 
-
             //test code for array
             /*for(int i= 0; i < 4; i++)
             {
@@ -63,17 +64,19 @@ namespace GaloDaVelha
                     Console.WriteLine(board[i,j]);
                 }
             }*/
-            Console.WriteLine("pls insert an int");
+
+            // test code for SetPiece()
+            /*Console.WriteLine("pls insert an int");
             tmpN = int.Parse(Console.ReadLine());
             
-            Console.WriteLine(SetPiece(tmpN));
+            Console.WriteLine(SetPiece(tmpN))*/
 
-
+            PrintBoard(board);
             
             
         }
 
-        //Sets the array of the board
+        //Sets the array of the board as 0
         public static int[,] SetBoard(int[,] board)
         {
             for(int i= 0; i < 4; i++)
@@ -84,32 +87,79 @@ namespace GaloDaVelha
                     board[i,j] = 0;
                 }
             }
-            return board;
+            return board; 
         }
 
-        //This method returns which piece it is (currently 
-        //does'nt return anything)
-        
+        /// <summary>
+        /// This method returns a char from an Enum using an int as reference
+        /// </summary>
+        /// <param name="pieceInt"><This is the int that decides the piece char>
+        /// <returns><The piece returns a char corresponding to the piecIint>
         public char SetPiece(int pieceInt)
         {
-            //ns que private static ou public quero returnar este char usando os
-            //enum
+       
 
             char tmpPiece = '\0';
             switch(pieceInt)
             {
-                case 1:
-                    tmpPiece = (char) Pieces.BigSquare;
-                    break;
+                 //This case might work better as default 
                 case 0:
                     tmpPiece = (char) Pieces.Null;
                     break;
+                case 1:
+                    tmpPiece = (char) Pieces.BigSquare;
+                    break;
+                case 2:
+                    tmpPiece = (char) Pieces.SmallSquare;
+                    break;
+                case 3:
+                    tmpPiece = (char) Pieces.BigSquareH;
+                    break;
+                case 4:
+                    tmpPiece = (char) Pieces.SmallSquareH;
+                    break;
+                case 5:
+                    tmpPiece = (char) Pieces.BigCircle;
+                    break;
+                case 6:
+                    tmpPiece = (char) Pieces.SmallCircle;
+                    break;
+                case 7:
+                    tmpPiece = (char) Pieces.BigCircleH;
+                    break;
+                case 8:
+                    tmpPiece = (char) Pieces.SmallCircleH;
+                    break;
+                
+
                 default:
                     break;
             }
 
             //Console.WriteLine(tmpPiece);
             return tmpPiece;
+        }
+
+        /// <summary>
+        /// Prints the board using the int values stored in the board array
+        /// </summary>
+        /// <param name="currentBoard"><The current board array>
+        public void PrintBoard(int[,] currentBoard)
+        {   //Idea For how to print the board
+            /*Console.WriteLine($"|  ||  ||  ||  |");
+            Console.WriteLine($"--------------");*/
+
+            
+            Console.WriteLine($"|{SetPiece(currentBoard[0,0])}||{SetPiece(currentBoard[0,1])}||{SetPiece(currentBoard[0,2])}||{SetPiece(currentBoard[0,3])}|");
+            Console.WriteLine("--------------");
+            Console.WriteLine($"|{SetPiece(currentBoard[1,0])}||{SetPiece(currentBoard[1,1])}||{SetPiece(currentBoard[1,2])}||{SetPiece(currentBoard[1,3])}|");
+            Console.WriteLine("--------------");
+            Console.WriteLine($"|{SetPiece(currentBoard[2,0])}||{SetPiece(currentBoard[2,1])}||{SetPiece(currentBoard[2,2])}||{SetPiece(currentBoard[2,3])}|");
+            Console.WriteLine("--------------");
+            Console.WriteLine($"|{SetPiece(currentBoard[3,0])}||{SetPiece(currentBoard[3,1])}||{SetPiece(currentBoard[3,2])}||{SetPiece(currentBoard[3,3])}|");
+            
+
+    
         }
 
     }
