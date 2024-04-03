@@ -12,7 +12,10 @@ namespace GaloDaVelha
     /// </summary>
     public class Game
     {
+        public int roundCounter = 0;
         public Pieces mypiece = 0;
+
+        public bool isRunning;
 
         public int tmpN;
 
@@ -42,10 +45,11 @@ namespace GaloDaVelha
         //Possible method to start the game
         public void StartGame()
         {
-            
+            Console.WriteLine("Welcome to Galo da velha here are the rules:");
+            //Write Rules (maybe even a show rules method)
             
             SetDefaultBoard(board);
-            SetBoardTest(board);
+            //SetBoardTest(board);
 
             //testcode for chars
             /*Console.WriteLine(cLargeHole);
@@ -72,7 +76,9 @@ namespace GaloDaVelha
             
             Console.WriteLine(SetPiece(tmpN))*/
 
-            PrintBoard(board);
+
+            //PrintBoard(board);
+            GameLoop();
             
             
         }
@@ -174,6 +180,91 @@ namespace GaloDaVelha
             return tmpPiece;
         }
 
+        public void GameLoop()
+
+        {   
+            string playerIn;
+            int tmpN;
+            int roundCounter = 0;
+            bool player1Turn = true;
+
+            /*Console.WriteLine("");
+            Console.WriteLine($"ROUND {roundCounter}:");
+            Console.WriteLine("----------------------------------------------");
+            Console.WriteLine("");*/
+
+            if(roundCounter <16)
+            {
+                if(player1Turn == true)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine($"ROUND {roundCounter}:");
+                    Console.WriteLine("-------------------------------------------");
+                    Console.WriteLine("");
+                    Console.WriteLine("Player 1, Pick player 2s Piece:");
+                    //tmpN = int.Parse(Console.ReadLine());
+                    playerIn = Console.ReadLine();
+                    tmpN = PiecePickerInputChecker(playerIn);
+                    Console.WriteLine(SetPiece(tmpN));
+
+
+
+    
+                }
+
+
+
+                roundCounter++;
+            }
+
+
+
+            
+            
+
+            //roundCounter++;
+        }
+
+        public static int PiecePickerInputChecker(string playerIn)
+        {
+            int testint;
+            int ret;
+            string tmpString;
+            bool playerInpValid = true;
+
+            
+
+            //list of conditions
+            if(playerIn.Length > 1){playerInpValid = false;}
+            
+            if(int.TryParse(playerIn, out ret) == false){playerInpValid =false;}
+        
+            //consequence
+            if(playerInpValid == false)
+            {
+                Console.WriteLine("Please insert a valid Piece (1-8)");
+                tmpString = Console.ReadLine();
+                //recurring method to make sure it works
+                PiecePickerInputChecker(tmpString);
+            }
+            else
+            {
+                ret = int.Parse(playerIn);
+            }
+            //Console.WriteLine(ret);
+            return ret;
+
+            
+        }
+
+        public static bool TurnSwitcher(bool player1turn)
+        {
+            if(player1turn == true){player1turn = false;}
+            else{player1turn = true;}
+
+            return player1turn;
+        }
+
         /// <summary>
         /// Prints the board using the int values stored in the board array
         /// Should be callled after every move
@@ -184,14 +275,14 @@ namespace GaloDaVelha
             /*Console.WriteLine($"|  ||  ||  ||  |");
             Console.WriteLine($"--------------");*/
 
-            
-            Console.WriteLine($"|{SetPiece(currentBoard[0,0])}||{SetPiece(currentBoard[0,1])}||{SetPiece(currentBoard[0,2])}||{SetPiece(currentBoard[0,3])}|");
+            Console.WriteLine($"   A  B  C  D ");
+            Console.WriteLine($"1 |{SetPiece(currentBoard[0,0])}||{SetPiece(currentBoard[0,1])}||{SetPiece(currentBoard[0,2])}||{SetPiece(currentBoard[0,3])}|");
             Console.WriteLine("--------------");
-            Console.WriteLine($"|{SetPiece(currentBoard[1,0])}||{SetPiece(currentBoard[1,1])}||{SetPiece(currentBoard[1,2])}||{SetPiece(currentBoard[1,3])}|");
+            Console.WriteLine($"2 |{SetPiece(currentBoard[1,0])}||{SetPiece(currentBoard[1,1])}||{SetPiece(currentBoard[1,2])}||{SetPiece(currentBoard[1,3])}|");
             Console.WriteLine("--------------");
-            Console.WriteLine($"|{SetPiece(currentBoard[2,0])}||{SetPiece(currentBoard[2,1])}||{SetPiece(currentBoard[2,2])}||{SetPiece(currentBoard[2,3])}|");
+            Console.WriteLine($"3 |{SetPiece(currentBoard[2,0])}||{SetPiece(currentBoard[2,1])}||{SetPiece(currentBoard[2,2])}||{SetPiece(currentBoard[2,3])}|");
             Console.WriteLine("--------------");
-            Console.WriteLine($"|{SetPiece(currentBoard[3,0])}||{SetPiece(currentBoard[3,1])}||{SetPiece(currentBoard[3,2])}||{SetPiece(currentBoard[3,3])}|");
+            Console.WriteLine($"4 |{SetPiece(currentBoard[3,0])}||{SetPiece(currentBoard[3,1])}||{SetPiece(currentBoard[3,2])}||{SetPiece(currentBoard[3,3])}|");
             
 
     
