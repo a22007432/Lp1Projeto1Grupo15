@@ -86,8 +86,8 @@ namespace GaloDaVelha
         /// <summary>
         /// Sets the board array to 0 which means no piece
         /// </summary>
-        /// <param name="board"><Array containing the values of the board>
-        /// <returns><Array containing the values of the board>
+        /// <param name="board">Array containing the values of the board</param>
+        /// <returns>Array containing the values of the board</returns>
         public static int[,] SetDefaultBoard(int[,] board)  
         {
             for(int i= 0; i < 4; i++)
@@ -101,10 +101,12 @@ namespace GaloDaVelha
             return board; 
         }
 
+
         /// <summary>
-        /// <This functions tests the board layout>
-        /// <param name="board"><Array containing the values of the board>
-        /// <returns><Array containing the values of the board>
+        /// This functions tests the board layout
+        /// </summary>
+        /// <param name="board">Array containing the values of the board</param>
+        /// <returns>Array containing the values of the board</returns>
         public static int[,] SetBoardTest(int[,] board)  
         {
             for(int i= 0; i < 4; i++)
@@ -130,11 +132,12 @@ namespace GaloDaVelha
             return board; 
         }
 
+
         /// <summary>
         /// This method returns a char from an Enum using an int as reference
         /// </summary>
-        /// <param name="pieceInt"><This is the int that decides the piece char>
-        /// <returns><The piece returns a char corresponding to the piecIint>
+        /// <param name="pieceInt">This is the int that decides the char</param>
+        /// <returns>The piece returns a char corresponding to the pieceInt</returns>
         public char SetPiece(int pieceInt)
         {
        
@@ -237,11 +240,13 @@ namespace GaloDaVelha
             //roundCounter++;
         }
 
+
         /// <summary>
-        /// <Recursive Method to make sure the player that picks a piece makes 
-        /// a valid input>
-        /// <param name="playerIn"><This is a string with the players input>
-        /// <returns><Returns an int that represents a piece>
+        /// Recursive Method to make sure the player that picks a piece makes 
+        /// a valid input
+        /// </summary>
+        /// <param name="playerIn">This is a string with the players input</param>
+        /// <returns>An int that represents a piece</returns>
         public static int PiecePickerInputChecker(string playerIn)
         {
             int testint;
@@ -273,11 +278,12 @@ namespace GaloDaVelha
 
             
         }
+        
         /// <summary>
-        /// 
+        /// Recursive Method to make sure the player makes a valid placement 
         /// </summary>
-        /// <param name="playerIn"></param>
-        /// <returns></returns>
+        /// <param name="playerIn">This is a string with the players input</param>
+        /// <returns>Returns an Array with the xy coordinates needed</returns>
         public static int[] BoardPlaceInputChecker(string playerIn)
         {
             int outInt = 0;
@@ -288,7 +294,6 @@ namespace GaloDaVelha
             string tryStr = "";
 
             if(playerIn.Length > 2){tryStr += playerIn[2];}
-            //tryStr += playerIn[2];
 
             //'A' = 65
             //'D' = 68
@@ -358,11 +363,12 @@ namespace GaloDaVelha
             return player1turn;
         }
 
+
+        
         /// <summary>
-        /// Prints the board using the int values stored in the board array
-        /// Should be callled after every move
+        /// Prints the board using the int values stored in the board array Should be callled after every move
         /// </summary>
-        ///<param name="currentBoard"><Array containing the values of the board>
+        /// <param name="currentBoard">Array containing the values of the board</param>
         public void PrintBoard(int[,] currentBoard)
         {   //Idea For how to print the board
             /*Console.WriteLine($"|  ||  ||  ||  |");
