@@ -102,8 +102,7 @@ namespace GaloDaVelha
         }
 
         /// <summary>
-        /// This functions tests the board 
-        /// </summary>
+        /// <This functions tests the board layout>
         /// <param name="board"><Array containing the values of the board>
         /// <returns><Array containing the values of the board>
         public static int[,] SetBoardTest(int[,] board)  
@@ -183,6 +182,7 @@ namespace GaloDaVelha
         public void GameLoop()
 
         {   
+            int[] placement;
             string playerIn;
             int tmpN;
             int roundCounter = 0;
@@ -202,10 +202,22 @@ namespace GaloDaVelha
                     Console.WriteLine("-------------------------------------------");
                     Console.WriteLine("");
                     Console.WriteLine("Player 1, Pick player 2s Piece:");
-                    //tmpN = int.Parse(Console.ReadLine());
+                    
+
                     playerIn = Console.ReadLine();
                     tmpN = PiecePickerInputChecker(playerIn);
-                    Console.WriteLine(SetPiece(tmpN));
+                    //Console.WriteLine(SetPiece(tmpN));
+                    Console.WriteLine("");
+                    Console.WriteLine(
+                    "Player 2, Place your piece using this format: 'column row':");
+                    playerIn = Console.ReadLine();
+                    placement = BoardPlaceInputChecker(playerIn);
+                    
+
+                    
+
+
+                    
 
 
 
@@ -225,6 +237,11 @@ namespace GaloDaVelha
             //roundCounter++;
         }
 
+        /// <summary>
+        /// <Recursive Method to make sure the player that picks a piece makes 
+        /// a valid input>
+        /// <param name="playerIn"><This is a string with the players input>
+        /// <returns><Returns an int that represents a piece>
         public static int PiecePickerInputChecker(string playerIn)
         {
             int testint;
@@ -242,7 +259,7 @@ namespace GaloDaVelha
             //consequence
             if(playerInpValid == false)
             {
-                Console.WriteLine("Please insert a valid Piece (1-8)");
+                Console.WriteLine("Please insert a valid Piece: (1-8)");
                 tmpString = Console.ReadLine();
                 //recurring method to make sure it works
                 PiecePickerInputChecker(tmpString);
@@ -255,6 +272,82 @@ namespace GaloDaVelha
             return ret;
 
             
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="playerIn"></param>
+        /// <returns></returns>
+        public static int[] BoardPlaceInputChecker(string playerIn)
+        {
+            int outInt = 0;
+            char[] charLim = {'A','B','C','D'};
+            int[] ret = new int[2];
+            bool playerInpValid = true;
+            string tmpString;
+            string tryStr = "";
+
+            if(playerIn.Length > 2){tryStr += playerIn[2];}
+            //tryStr += playerIn[2];
+
+            //'A' = 65
+            //'D' = 68
+            //list of conditions
+            //if input length is higher than 3
+            if(playerIn.Length > 3 || playerIn.Length < 3)
+            {playerInpValid = false;}
+            //if it was another char other than ABCD
+            if((int)playerIn[0] < 65 || (int)playerIn[0] > 68)
+            {playerInpValid = false;}
+            //if the number can't be parsed
+            if(int.TryParse(tryStr, out outInt) == false)
+            {playerInpValid =false;}
+            else
+            {
+                if(int.Parse(tryStr) < 1 || int.Parse(tryStr) >4 )
+                {
+                    playerInpValid =false;
+                }
+            }
+            
+            
+            
+
+            //consequence
+            if(playerInpValid == false)
+            {
+                Console.WriteLine("Please insert a valid Postion: 'Char_Int'");
+                Console.WriteLine("Please use chars that fit the board");
+
+                tmpString = Console.ReadLine();
+                //recurring method to make sure it works
+                BoardPlaceInputChecker(tmpString);
+            }
+            else
+            {
+                switch(playerIn[0])
+                {
+                    case 'A':
+                        ret[1] = 0;
+                        break;
+                    case 'B':
+                        ret[1] = 1;
+                        break;
+                    case 'C':
+                        ret[1] = 2;
+                        break;
+                    case 'D':
+                        ret[1] = 3;
+                        break;
+                    default:
+                        break;
+                }
+
+                ret[0] = int.Parse(tryStr)-1;
+            }
+            //Console.WriteLine(ret[0],ret[1]);
+            return ret;
+
         }
 
         public static bool TurnSwitcher(bool player1turn)
