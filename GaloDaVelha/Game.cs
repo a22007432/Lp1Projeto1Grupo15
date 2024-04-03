@@ -40,11 +40,10 @@ namespace GaloDaVelha
         static int[,] board = new int [4,4]; 
 
 
-
-        
         //Possible method to start the game
         public void StartGame()
         {
+            PrintBoard(board);
             Console.WriteLine("Welcome to Galo da velha here are the rules:");
             //Write Rules (maybe even a show rules method)
             
@@ -185,6 +184,7 @@ namespace GaloDaVelha
         public void GameLoop()
 
         {   
+            //[Col, Row]
             int[] placement;
             string playerIn;
             int tmpN;
@@ -215,16 +215,16 @@ namespace GaloDaVelha
                     "Player 2, Place your piece using this format: 'column row':");
                     playerIn = Console.ReadLine();
                     placement = BoardPlaceInputChecker(playerIn);
+                    board[placement[1],placement[0]] = tmpN;
+
+                    Console.WriteLine("");
+                    PrintBoard(board);
+
+
+                }
+                else
+                {
                     
-
-                    
-
-
-                    
-
-
-
-    
                 }
 
 
@@ -333,22 +333,22 @@ namespace GaloDaVelha
                 switch(playerIn[0])
                 {
                     case 'A':
-                        ret[1] = 0;
+                        ret[0] = 0;
                         break;
                     case 'B':
-                        ret[1] = 1;
+                        ret[0] = 1;
                         break;
                     case 'C':
-                        ret[1] = 2;
+                        ret[0] = 2;
                         break;
                     case 'D':
-                        ret[1] = 3;
+                        ret[0] = 3;
                         break;
                     default:
                         break;
                 }
 
-                ret[0] = int.Parse(tryStr)-1;
+                ret[1] = int.Parse(tryStr)-1;
             }
             //Console.WriteLine(ret[0],ret[1]);
             return ret;
