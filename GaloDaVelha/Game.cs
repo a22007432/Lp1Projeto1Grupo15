@@ -196,7 +196,7 @@ namespace GaloDaVelha
             Console.WriteLine("----------------------------------------------");
             Console.WriteLine("");*/
 
-            if(roundCounter <16)
+            while(roundCounter <3)//mudar para 16
             {
                 if(player1Turn == true)
                 {
@@ -220,11 +220,34 @@ namespace GaloDaVelha
                     Console.WriteLine("");
                     PrintBoard(board);
 
+                    player1Turn =TurnSwitcher(player1Turn);
+
 
                 }
                 else
                 {
+                    Console.WriteLine("");
+                    Console.WriteLine($"ROUND {roundCounter}:");
+                    Console.WriteLine("-------------------------------------------");
+                    Console.WriteLine("");
+                    Console.WriteLine("Player 2, Pick player 1s Piece:");
                     
+
+                    playerIn = Console.ReadLine();
+                    tmpN = PiecePickerInputChecker(playerIn);
+                    //Console.WriteLine(SetPiece(tmpN));
+                    Console.WriteLine("");
+                    Console.WriteLine(
+                    "Player 2, Place your piece using this format: 'column row':");
+                    playerIn = Console.ReadLine();
+                    placement = BoardPlaceInputChecker(playerIn);
+                    board[placement[1],placement[0]] = tmpN;
+
+                    Console.WriteLine("");
+                    PrintBoard(board);
+
+                    player1Turn =TurnSwitcher(player1Turn);
+
                 }
 
 
@@ -357,7 +380,8 @@ namespace GaloDaVelha
 
         public static bool TurnSwitcher(bool player1turn)
         {
-            if(player1turn == true){player1turn = false;}
+            if(player1turn == true)
+            {player1turn = false;}
             else{player1turn = true;}
 
             return player1turn;
