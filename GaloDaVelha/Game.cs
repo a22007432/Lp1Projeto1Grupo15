@@ -196,7 +196,7 @@ namespace GaloDaVelha
             Console.WriteLine("----------------------------------------------");
             Console.WriteLine("");*/
 
-            while(roundCounter <3)//mudar para 16
+            while(roundCounter < 16)
             {
                 if(player1Turn == true)
                 {
@@ -204,23 +204,33 @@ namespace GaloDaVelha
                     Console.WriteLine($"ROUND {roundCounter}:");
                     Console.WriteLine("-------------------------------------------");
                     Console.WriteLine("");
-                    Console.WriteLine("Player 1, Pick player 2s Piece:");
+                    Console.WriteLine("Player 1, Pick player 2s Piece (You can use 'F' to forfeit):");
                     
 
                     playerIn = Console.ReadLine();
-                    tmpN = PiecePickerInputChecker(playerIn);
-                    //Console.WriteLine(SetPiece(tmpN));
-                    Console.WriteLine("");
-                    Console.WriteLine(
-                    "Player 2, Place your piece using this format: 'column row':");
-                    playerIn = Console.ReadLine();
-                    placement = BoardPlaceInputChecker(playerIn);
-                    board[placement[1],placement[0]] = tmpN;
+                    
+                    if(playerIn == "F")
+                    {
+                        GameResult("F1");
+                        break;
+                    }
+                    else
+                    {
+                        tmpN = PiecePickerInputChecker(playerIn);
 
-                    Console.WriteLine("");
-                    PrintBoard(board);
+                        //Console.WriteLine(SetPiece(tmpN));
+                        Console.WriteLine("");
+                        Console.WriteLine(
+                        "Player 2, Place your piece using this format: 'column row':");
+                        playerIn = Console.ReadLine();
+                        placement = BoardPlaceInputChecker(playerIn);
+                        board[placement[1],placement[0]] = tmpN;
 
-                    player1Turn =TurnSwitcher(player1Turn);
+                        Console.WriteLine("");
+                        PrintBoard(board);
+
+                        player1Turn =TurnSwitcher(player1Turn);
+                    }
 
 
                 }
@@ -230,35 +240,36 @@ namespace GaloDaVelha
                     Console.WriteLine($"ROUND {roundCounter}:");
                     Console.WriteLine("-------------------------------------------");
                     Console.WriteLine("");
-                    Console.WriteLine("Player 2, Pick player 1s Piece:");
+                    Console.WriteLine("Player 2, Pick player 1s Piece (You can use 'F' to forfeit):");
                     
 
                     playerIn = Console.ReadLine();
-                    tmpN = PiecePickerInputChecker(playerIn);
-                    //Console.WriteLine(SetPiece(tmpN));
-                    Console.WriteLine("");
-                    Console.WriteLine(
-                    "Player 2, Place your piece using this format: 'column row':");
-                    playerIn = Console.ReadLine();
-                    placement = BoardPlaceInputChecker(playerIn);
-                    board[placement[1],placement[0]] = tmpN;
+                    
+                    if(playerIn == "F")
+                    {
+                        GameResult("F2");
+                        break;
+                    }
+                    else
+                    {
+                        tmpN = PiecePickerInputChecker(playerIn);
+                        //Console.WriteLine(SetPiece(tmpN));
+                        Console.WriteLine("");
+                        Console.WriteLine(
+                        "Player 2, Place your piece using this format: 'column row':");
+                        playerIn = Console.ReadLine();
+                        placement = BoardPlaceInputChecker(playerIn);
+                        board[placement[1],placement[0]] = tmpN;
 
-                    Console.WriteLine("");
-                    PrintBoard(board);
+                        Console.WriteLine("");
+                        PrintBoard(board);
 
-                    player1Turn =TurnSwitcher(player1Turn);
-
+                        player1Turn =TurnSwitcher(player1Turn);
+                    }
                 }
-
-
 
                 roundCounter++;
             }
-
-
-
-            
-            
 
             //roundCounter++;
         }
@@ -277,13 +288,12 @@ namespace GaloDaVelha
             string tmpString;
             bool playerInpValid = true;
 
-            
 
             //list of conditions
             if(playerIn.Length > 1){playerInpValid = false;}
             
             if(int.TryParse(playerIn, out ret) == false){playerInpValid =false;}
-        
+
             //consequence
             if(playerInpValid == false)
             {
@@ -299,7 +309,6 @@ namespace GaloDaVelha
             //Console.WriteLine(ret);
             return ret;
 
-            
         }
         
         /// <summary>
@@ -399,16 +408,46 @@ namespace GaloDaVelha
             Console.WriteLine($"--------------");*/
 
             Console.WriteLine($"   A  B  C  D ");
+
             Console.WriteLine($"1 |{SetPiece(currentBoard[0,0])}||{SetPiece(currentBoard[0,1])}||{SetPiece(currentBoard[0,2])}||{SetPiece(currentBoard[0,3])}|");
             Console.WriteLine("--------------");
+
             Console.WriteLine($"2 |{SetPiece(currentBoard[1,0])}||{SetPiece(currentBoard[1,1])}||{SetPiece(currentBoard[1,2])}||{SetPiece(currentBoard[1,3])}|");
             Console.WriteLine("--------------");
+
             Console.WriteLine($"3 |{SetPiece(currentBoard[2,0])}||{SetPiece(currentBoard[2,1])}||{SetPiece(currentBoard[2,2])}||{SetPiece(currentBoard[2,3])}|");
             Console.WriteLine("--------------");
-            Console.WriteLine($"4 |{SetPiece(currentBoard[3,0])}||{SetPiece(currentBoard[3,1])}||{SetPiece(currentBoard[3,2])}||{SetPiece(currentBoard[3,3])}|");
-            
 
-    
+            Console.WriteLine($"4 |{SetPiece(currentBoard[3,0])}||{SetPiece(currentBoard[3,1])}||{SetPiece(currentBoard[3,2])}||{SetPiece(currentBoard[3,3])}|");
+        }
+
+        // Send "F(player number)" for forfeit
+        // Send "1" for player 1 win
+        // Send "2" for player 2 win
+        // Send "D" for draw
+        private void GameResult(string result)
+        {
+            switch (result)
+            {
+                case "F1":
+                    Console.WriteLine("Player 1 forfeited the game");
+                    break;
+                case "F2":
+                    Console.WriteLine("Player 2 forfeited the game");
+                    break;
+                case "1":
+                    Console.WriteLine("Player 1 wins");
+                    break;
+                case "2":
+                    Console.WriteLine("Player 2 wins");
+                    break;
+                case "D":
+                    Console.WriteLine("Draw");
+                    break;
+                default:
+                    Console.WriteLine("Invalid result");
+                    break;
+            }
         }
 
     }

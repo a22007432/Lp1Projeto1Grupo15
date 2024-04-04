@@ -11,7 +11,7 @@ namespace GaloDaVelha
     public enum Pieces
     {
         //BigSquare = 1 << 0,
-        Null = 'X' << 0,
+        Null = 'X',
 
         //Cant left or right chars or theyll break
         BigSquare = '\u2610',  //☐
