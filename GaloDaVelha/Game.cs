@@ -302,20 +302,46 @@ namespace GaloDaVelha
                 Console.WriteLine("Please insert a valid Piece: (1-8)");
                 tmpString = Console.ReadLine();
                 //recurring method to make sure it works
-                PiecePickerInputChecker(tmpString, player);
+                return PiecePickerInputChecker(tmpString, player);
             }
             else
             {
                 if (player == "1")
+                {
                     ret = int.Parse(playerIn);
+                    
+                    foreach (int value in board)
+                    {
+                        if (value == ret)
+                        {
+                            Console.WriteLine("That piece was already used.");
+                            Console.WriteLine("Please insert a valid Piece: (1-8)");
+                            tmpString = Console.ReadLine();
+                            //recurring method to make sure it works
+                            return PiecePickerInputChecker(tmpString, player);
+                        }
+                    }
+                }
                 else if (player == "2")
                 {
                     ret = int.Parse(playerIn);
                     ret += 8;
+
+                    foreach (int value in board)
+                    {
+                        if (value == ret)
+                        {
+                            Console.WriteLine("That piece was already used.");
+                            Console.WriteLine("Please insert a valid Piece: (1-8)");
+                            tmpString = Console.ReadLine();
+                            //recurring method to make sure it works
+                            return PiecePickerInputChecker(tmpString, player);
+                        }
+                    }
                 }
+                
+                return ret;
             }
-            //Console.WriteLine(ret);
-            return ret;
 
         }
         
