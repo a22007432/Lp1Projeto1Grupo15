@@ -283,13 +283,17 @@ namespace GaloDaVelha
 
                 isWin = WinCondition(board,tmpN,placement,conditions,playerIn);
                 
+
+                // test code.
                 if(isWin == true)
                 {
+                  
                     Console.WriteLine("YOU  WON LOL");
                     Console.WriteLine("YOU  WON LOL");
                     Console.WriteLine("YOU  WON LOL");
                     Console.WriteLine("YOU  WON LOL");
                     Console.WriteLine("YOU  WON LOL");
+                    break;
                 }
             }
 
@@ -584,6 +588,46 @@ namespace GaloDaVelha
                     conditions[2] += 1;
                     conditions[5] += 1;
                     break;
+                case 9: //☐ square, no hole, big
+                    conditions[0] += 1;
+                    conditions[3] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 10: //◇ square, no hole, small
+                    conditions[0] += 1;
+                    conditions[3] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 11: //☒ square,hole,big
+                    conditions[0] += 1;
+                    conditions[2] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 12: //◈ square,hole,small
+                    conditions[0] += 1;
+                    conditions[2] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 13: //○ circle, no hole, big
+                    conditions[1] += 1;
+                    conditions[3] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 14: //◦ circle, no hole, small
+                    conditions[1] += 1;
+                    conditions[3] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 15: //◎ circle, hole, big
+                    conditions[1] += 1;
+                    conditions[2] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 16: //☉ circle, hole, small
+                    conditions[1] += 1;
+                    conditions[2] += 1;
+                    conditions[5] += 1;
+                    break;
                 default:
                     break;
 
@@ -604,6 +648,7 @@ namespace GaloDaVelha
                 pieceLine[i] = board[i,position[1]];
             }
 
+            // Converter todos os checkers em metodos, ver condicões para os metodos
             //vertical checker
             /*for (int i = 0; i < 4; i ++)
             {
@@ -647,7 +692,7 @@ namespace GaloDaVelha
                 //Console.WriteLine($"this is cond:{conditions}");
                 
             }
-            //foreach(var i in conditions){Console.WriteLine(i.ToString());}
+            
 
             
             return conditions;
