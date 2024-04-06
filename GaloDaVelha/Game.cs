@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -191,6 +192,7 @@ namespace GaloDaVelha
         public void GameLoop()
 
         {   
+            bool isWin;
             //[Col, Row]
             int[] placement;
             string playerIn;
@@ -275,8 +277,24 @@ namespace GaloDaVelha
                         player1Turn =TurnSwitcher(player1Turn);
                     }
                 }
-
+                
                 roundCounter++;
+                foreach(var i in board){Console.WriteLine(i.ToString());}
+
+                isWin = WinCondition(board,tmpN,placement,conditions,playerIn);
+                
+
+                // test code.
+                if(isWin == true)
+                {
+                  
+                    Console.WriteLine("YOU  WON LOL");
+                    Console.WriteLine("YOU  WON LOL");
+                    Console.WriteLine("YOU  WON LOL");
+                    Console.WriteLine("YOU  WON LOL");
+                    Console.WriteLine("YOU  WON LOL");
+                    break;
+                }
             }
 
             //roundCounter++;
@@ -497,20 +515,20 @@ namespace GaloDaVelha
             }
         }
 
-
-        //(0square, 1circle, 2hole, 3no hole, 4big, 5small, 6white, 7black)
+        //position xy 0-3
         private static bool WinCondition(int[,] board, int piece, int[] position, int[] conditions, string player)
         {   
-
-            bool winner = false;
             
-           
+            bool winner = false;
+
+            conditions = PieceRunthrough(conditions,position,board);
 
 
-
-            //Checks codition
+            
+            //Checks condition
             foreach(int c in conditions)
             {
+                //Console.WriteLine($"{c}");
                 if(c >= 4){winner = true;}
             }
 
@@ -518,7 +536,14 @@ namespace GaloDaVelha
         }
 
          //(0square, 1circle, 2hole, 3no hole, 4big, 5small, 6white, 7black)
-        public int[] ConditionChecker(int[] conditions, int piece, string player)
+         /// <summary>
+         /// Checks a piece to see what attributes it has
+         /// </summary>
+         /// <param name="conditions">A static array that holds the winning conditions</param>
+         /// <param name="piece">Int that repreents a board piece</param>
+         /// <param name="player">The player who placed that piece</param>
+         /// <returns></returns>
+        public static int[] PieceConditionChecker(int[] conditions, int piece)
         {   
             //Checks conditions for pieces
             switch (piece)
@@ -563,6 +588,46 @@ namespace GaloDaVelha
                     conditions[2] += 1;
                     conditions[5] += 1;
                     break;
+                case 9: //☐ square, no hole, big
+                    conditions[0] += 1;
+                    conditions[3] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 10: //◇ square, no hole, small
+                    conditions[0] += 1;
+                    conditions[3] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 11: //☒ square,hole,big
+                    conditions[0] += 1;
+                    conditions[2] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 12: //◈ square,hole,small
+                    conditions[0] += 1;
+                    conditions[2] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 13: //○ circle, no hole, big
+                    conditions[1] += 1;
+                    conditions[3] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 14: //◦ circle, no hole, small
+                    conditions[1] += 1;
+                    conditions[3] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 15: //◎ circle, hole, big
+                    conditions[1] += 1;
+                    conditions[2] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 16: //☉ circle, hole, small
+                    conditions[1] += 1;
+                    conditions[2] += 1;
+                    conditions[5] += 1;
+                    break;
                 default:
                     break;
 
@@ -570,6 +635,71 @@ namespace GaloDaVelha
             }
             return conditions;
         }
+
+        //position xy 0-3
+        public static int[] PieceRunthrough(int[] conditions, int[] position, int[,] board)
+        {   
+            int[] pieceLine = new int[4];
+            int[] tmpCoditions;
+
+            //horizontal checker
+            for (int i = 0; i < 4; i ++)
+            {
+                pieceLine[i] = board[i,position[1]];
+            }
+
+            // Converter todos os checkers em metodos, ver condicões para os metodos
+            //vertical checker
+            /*for (int i = 0; i < 4; i ++)
+            {
+                pieceLine[i] = board[position[0],i];
+            }*/
+
+            //diagonal checker 00,11,22,33
+            /*for(int i = 0; i < 4; i ++)
+            {
+                pieceLine[i] = board[i,i];
+            }*/
+
+            //diagonal checker 03,21,12,30~
+            /*
+            pieceLine[0] = board[0,3];
+            pieceLine[0] = board[2,1];
+            pieceLine[0] = board[1,2];
+            pieceLine[0] = board[3,0];*/
+
+            //foreach(var i in pieceLine){Console.WriteLine(i.ToString());}
+            
+            for (int f = 0; f < pieceLine.Length; f++)
+            {
+                tmpCoditions = PieceConditionChecker(conditions,pieceLine[f]);
+
+                
+                // problem
+                /*for (int j = 0; j<conditions.Length; j++)
+                {
+                    conditions[j] += tmpCoditions[j];
+                    Console.WriteLine($"this is cond:{conditions[j]}");
+                }*/
+                conditions[0] = tmpCoditions[0];
+                conditions[1] = tmpCoditions[1];
+                conditions[2] = tmpCoditions[2];
+                conditions[3] = tmpCoditions[3];
+                conditions[4] = tmpCoditions[4];
+                conditions[5] = tmpCoditions[5];
+                conditions[6] = tmpCoditions[6];
+                conditions[7] = tmpCoditions[7];
+                //Console.WriteLine($"this is cond:{conditions}");
+                
+            }
+            
+
+            
+            return conditions;
+
+        }
+
+        
 
         // Send "F(player number)" for forfeit
         // Send "1" for player 1 win

@@ -15,18 +15,21 @@ namespace GaloDaVelha
         Null = 'X',
 
         //Cant left or right chars or theyll break
-        BigSquare = '\u2610',  //☐
+        //BigSquare = '\u2610',
+        BigSquare = '1',  //☐
 
 
         //SmallSquare = 1 << 2,
-        SmallSquare = '\u25C7', //◇
+        //SmallSquare = '\u25C7',
+        SmallSquare = '2', //◇
 
 
         //BigSquareH = 1 << 3,
-        BigSquareH = '\u2612',  //☒ 
+        //BigSquareH = '\u2612',  //☒ 
+        BigSquareH = '3',
 
-        //SmallSquareH = 1 << 4,
-        SmallSquareH ='\u25C8', //◈
+        SmallSquareH = '4',
+        //SmallSquareH ='\u25C8', //◈
         
         //BigCircle = 1 << 5,
         BigCircle = '\u25CB', //○
