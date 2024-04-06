@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 
@@ -38,6 +39,12 @@ namespace GaloDaVelha
 
         //Array to hold the board values
         static int[,] board = new int [4,4]; 
+        
+        /// <summary>
+        /// Array that holds ints that represent conditions (square, circle, hole, no hole, big, small, white, black)
+        /// </summary>
+        /// <value></value>
+        static int[] conditions = {0,0,0,0,0,0,0,0};
 
 
         //Possible method to start the game
@@ -446,8 +453,7 @@ namespace GaloDaVelha
 
         public static bool TurnSwitcher(bool player1turn)
         {
-            if(player1turn == true)
-            {player1turn = false;}
+            if(player1turn == true){player1turn = false;}
             else{player1turn = true;}
 
             return player1turn;
@@ -491,6 +497,79 @@ namespace GaloDaVelha
             }
         }
 
+
+        //(0square, 1circle, 2hole, 3no hole, 4big, 5small, 6white, 7black)
+        private static bool WinCondition(int[,] board, int piece, int[] position, int[] conditions, string player)
+        {   
+
+            bool winner = false;
+            
+           
+
+
+
+            //Checks codition
+            foreach(int c in conditions)
+            {
+                if(c >= 4){winner = true;}
+            }
+
+           return winner;
+        }
+
+         //(0square, 1circle, 2hole, 3no hole, 4big, 5small, 6white, 7black)
+        public int[] ConditionChecker(int[] conditions, int piece, string player)
+        {   
+            //Checks conditions for pieces
+            switch (piece)
+            {
+                case 1: //☐ square, no hole, big
+                    conditions[0] += 1;
+                    conditions[3] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 2: //◇ square, no hole, small
+                    conditions[0] += 1;
+                    conditions[3] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 3: //☒ square,hole,big
+                    conditions[0] += 1;
+                    conditions[2] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 4: //◈ square,hole,small
+                    conditions[0] += 1;
+                    conditions[2] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 5: //○ circle, no hole, big
+                    conditions[1] += 1;
+                    conditions[3] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 6: //◦ circle, no hole, small
+                    conditions[1] += 1;
+                    conditions[3] += 1;
+                    conditions[5] += 1;
+                    break;
+                case 7: //◎ circle, hole, big
+                    conditions[1] += 1;
+                    conditions[2] += 1;
+                    conditions[4] += 1;
+                    break;
+                case 8: //☉ circle, hole, small
+                    conditions[1] += 1;
+                    conditions[2] += 1;
+                    conditions[5] += 1;
+                    break;
+                default:
+                    break;
+
+
+            }
+            return conditions;
+        }
 
         // Send "F(player number)" for forfeit
         // Send "1" for player 1 win
