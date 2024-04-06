@@ -216,7 +216,7 @@ namespace GaloDaVelha
                     }
                     else
                     {
-                        tmpN = PiecePickerInputChecker(playerIn);
+                        tmpN = PiecePickerInputChecker(playerIn, "2");
 
                         //Console.WriteLine(SetPiece(tmpN));
                         Console.WriteLine("");
@@ -252,13 +252,14 @@ namespace GaloDaVelha
                     }
                     else
                     {
-                        tmpN = PiecePickerInputChecker(playerIn);
+                        tmpN = PiecePickerInputChecker(playerIn, "1");
                         //Console.WriteLine(SetPiece(tmpN));
                         Console.WriteLine("");
                         Console.WriteLine(
-                        "Player 2, Place your piece using this format: 'column row':");
+                        "Player 1, Place your piece using this format: 'column row':");
                         playerIn = Console.ReadLine();
                         placement = BoardPlaceInputChecker(playerIn);
+                        
                         board[placement[1],placement[0]] = tmpN;
 
                         Console.WriteLine("");
@@ -281,18 +282,19 @@ namespace GaloDaVelha
         /// </summary>
         /// <param name="playerIn">This is a string with the players input</param>
         /// <returns>An int that represents a piece</returns>
-        public static int PiecePickerInputChecker(string playerIn)
+        public static int PiecePickerInputChecker(string playerIn, string player)
         {
-            int testint;
             int ret;
             string tmpString;
             bool playerInpValid = true;
 
 
             //list of conditions
-            if(playerIn.Length > 1){playerInpValid = false;}
+            if(playerIn.Length != 1)
+                playerInpValid = false;
             
-            if(int.TryParse(playerIn, out ret) == false){playerInpValid =false;}
+            if(int.TryParse(playerIn, out ret) == false)
+                playerInpValid =false;
 
             //consequence
             if(playerInpValid == false)
@@ -300,11 +302,17 @@ namespace GaloDaVelha
                 Console.WriteLine("Please insert a valid Piece: (1-8)");
                 tmpString = Console.ReadLine();
                 //recurring method to make sure it works
-                PiecePickerInputChecker(tmpString);
+                PiecePickerInputChecker(tmpString, player);
             }
             else
             {
-                ret = int.Parse(playerIn);
+                if (player == "1")
+                    ret = int.Parse(playerIn);
+                else if (player == "2")
+                {
+                    ret = int.Parse(playerIn);
+                    ret += 8;
+                }
             }
             //Console.WriteLine(ret);
             return ret;
@@ -321,24 +329,36 @@ namespace GaloDaVelha
             int outInt = 0;
             char[] charLim = {'A','B','C','D'};
             int[] ret = new int[2];
+            int[] tempRet = new int[2];
             bool playerInpValid = true;
             string tmpString;
             string tryStr = "";
 
-            if(playerIn.Length > 2){tryStr += playerIn[2];}
+            if(playerIn.Length > 2)
+            {
+                tryStr += playerIn[2];
+            }
 
             //'A' = 65
             //'D' = 68
             //list of conditions
             //if input length is higher than 3
-            if(playerIn.Length > 3 || playerIn.Length < 3)
-            {playerInpValid = false;}
+            if(playerIn.Length != 3)
+            {
+                playerInpValid = false;
+            }
+
             //if it was another char other than ABCD
             if((int)playerIn[0] < 65 || (int)playerIn[0] > 68)
-            {playerInpValid = false;}
+            {
+                playerInpValid = false;
+            }
+
             //if the number can't be parsed
             if(int.TryParse(tryStr, out outInt) == false)
-            {playerInpValid =false;}
+            {
+                playerInpValid =false;
+            }
             else
             {
                 if(int.Parse(tryStr) < 1 || int.Parse(tryStr) >4 )
@@ -347,9 +367,6 @@ namespace GaloDaVelha
                 }
             }
             
-            
-            
-
             //consequence
             if(playerInpValid == false)
             {
@@ -409,17 +426,31 @@ namespace GaloDaVelha
 
             Console.WriteLine($"   A  B  C  D ");
 
-            Console.WriteLine($"1 |{SetPiece(currentBoard[0,0])}||{SetPiece(currentBoard[0,1])}||{SetPiece(currentBoard[0,2])}||{SetPiece(currentBoard[0,3])}|");
-            Console.WriteLine("--------------");
+            for(int i = 0; i < 4; i++)
+            {
+                Console.Write($"{i+1} ");
 
-            Console.WriteLine($"2 |{SetPiece(currentBoard[1,0])}||{SetPiece(currentBoard[1,1])}||{SetPiece(currentBoard[1,2])}||{SetPiece(currentBoard[1,3])}|");
-            Console.WriteLine("--------------");
-
-            Console.WriteLine($"3 |{SetPiece(currentBoard[2,0])}||{SetPiece(currentBoard[2,1])}||{SetPiece(currentBoard[2,2])}||{SetPiece(currentBoard[2,3])}|");
-            Console.WriteLine("--------------");
-
-            Console.WriteLine($"4 |{SetPiece(currentBoard[3,0])}||{SetPiece(currentBoard[3,1])}||{SetPiece(currentBoard[3,2])}||{SetPiece(currentBoard[3,3])}|");
+                for(int j = 0; j < 4; j++)
+                {
+                    if (currentBoard[i,j] < 9)
+                        Console.Write($"|{SetPiece(currentBoard[i,j])}|");
+                    
+                    else if (currentBoard[i,j] < 17)
+                    {
+                        Console.Write("|");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write($"{SetPiece(currentBoard[i,j] - 8)}");
+                        Console.ResetColor();
+                        Console.Write ("|");
+                    }
+                }
+                Console.WriteLine("");
+                
+                if (i <= 2)
+                    Console.WriteLine("--------------");
+            }
         }
+
 
         // Send "F(player number)" for forfeit
         // Send "1" for player 1 win
