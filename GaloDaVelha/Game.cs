@@ -382,25 +382,39 @@ namespace GaloDaVelha
                 switch(playerIn[0])
                 {
                     case 'A':
-                        ret[0] = 0;
+                        tempRet[0] = 0;
                         break;
                     case 'B':
-                        ret[0] = 1;
+                        tempRet[0] = 1;
                         break;
                     case 'C':
-                        ret[0] = 2;
+                        tempRet[0] = 2;
                         break;
                     case 'D':
-                        ret[0] = 3;
+                        tempRet[0] = 3;
                         break;
                     default:
                         break;
                 }
 
-                ret[1] = int.Parse(tryStr)-1;
+                tempRet[1] = int.Parse(tryStr)-1;
             }
-            //Console.WriteLine(ret[0],ret[1]);
-            return ret;
+
+            if (board[tempRet[0],tempRet[1]] != 0)
+            {
+                Console.WriteLine("This spot is already taken");
+                Console.WriteLine("Please insert a valid Postion: 'Char_Int'");
+
+                tmpString = Console.ReadLine();
+                //recurring method to make sure it works
+                return BoardPlaceInputChecker(tmpString);
+            }
+            else
+            {
+                ret[0] = tempRet[0];
+                ret[1] = tempRet[1];
+                return ret;
+            }
 
         }
 
