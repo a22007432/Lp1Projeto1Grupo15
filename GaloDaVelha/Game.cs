@@ -6,7 +6,6 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
-
 namespace GaloDaVelha
 {
     /// <summary>
@@ -23,16 +22,13 @@ namespace GaloDaVelha
         /// <value></value>
         static int[] conditions = {0,0,0,0,0,0,0,0};
 
-
-        //Possible method to start the game
+        //Method to start the game
         public void StartGame()
         {
             PrintBoard(board);
             
             SetDefaultBoard(board);
             GameLoop();
-            
-            
         }
 
         /// <summary>
@@ -43,8 +39,7 @@ namespace GaloDaVelha
         public static int[,] SetDefaultBoard(int[,] board)  
         {
             for(int i= 0; i < 4; i++)
-            {
-                
+            {                
                 for(int j = 0; j< 4; j ++)
                 {
                     board[i,j] = 0;
@@ -52,8 +47,6 @@ namespace GaloDaVelha
             }
             return board; 
         }
-
-
        
         /// <summary>
         /// This method returns a char from an Enum using an int as reference
@@ -62,7 +55,6 @@ namespace GaloDaVelha
         /// <returns>The piece returns a char corresponding to the pieceInt</returns>
         public char SetPiece(int pieceInt)
         {
-       
             char tmpPiece = '\0';
             switch(pieceInt)
             {
@@ -94,25 +86,30 @@ namespace GaloDaVelha
                 case 8:
                     tmpPiece = (char) Pieces.SmallCircleH;//☉
                     break;
-                
-
                 default:
                     break;
             }
-
             return tmpPiece;
         }
 
+        /// <summary>
+        /// The game loop where it decides the player turn and calls the functions to decide who wins
+        /// </summary>
+        /// <param name="placement">The placement of the piece according to the playerIN</param>
+        /// <param name="playerIn">The player input</param>
+        /// <param name="tmpN">The variable used to check a valid input of the piece</param>
+        /// <param name="roundCounter">An int for the number of rounds</param>
+        /// <param name="player1Turn">Boolean that decides the player turn</param>
         public void GameLoop()
-
         {   
             int[] placement;
             string playerIn;
             int tmpN;
-            int roundCounter = 0;
+            int roundCounter = 1;
             bool player1Turn = true;
 
-            while(roundCounter < 16)
+            //While there is still space in the board to play pieces 
+            while(roundCounter < 17)
             {
                 if(player1Turn == true)
                 {
@@ -122,7 +119,6 @@ namespace GaloDaVelha
                     Console.WriteLine("");
                     Console.WriteLine("Player 1, Pick player 2s Piece (You can use 'F' to forfeit):");
                     
-
                     playerIn = Console.ReadLine();
                     
                     if(playerIn == "F")
@@ -151,8 +147,6 @@ namespace GaloDaVelha
 
                         player1Turn = TurnSwitcher(player1Turn);
                     }
-
-
                 }
                 else
                 {
@@ -162,7 +156,6 @@ namespace GaloDaVelha
                     Console.WriteLine("");
                     Console.WriteLine("Player 2, Pick player 1s Piece (You can use 'F' to forfeit):");
                     
-
                     playerIn = Console.ReadLine();
                     
                     if(playerIn == "F")
@@ -190,9 +183,7 @@ namespace GaloDaVelha
                 }
                 
                 roundCounter++;
-                //foreach(var i in board){Console.WriteLine(i.ToString());}
 
-                // test code.
                 if(WinCondition(board,placement,conditions))
                 {
                     if (player1Turn)
@@ -208,15 +199,22 @@ namespace GaloDaVelha
                 }
             }
 
-            //roundCounter++;
-        }
+            if (roundCounter > 16)
+            {
+                GameResult("D");
+            }
 
+        }
 
         /// <summary>
         /// Recursive Method to make sure the player that picks a piece makes 
         /// a valid input
         /// </summary>
         /// <param name="playerIn">This is a string with the players input</param>
+        /// <param name="player">This is a string that says which player played, in case of forfeit</param>
+        /// <param name="ret">This is a secondary int that retains the player input</param>
+        /// <param name="tmpString">This is a temporary string with the players input for checking the validity</param>
+        /// <param name="playerInpValid">This is a bool that says if the player input was valid or not</param>
         /// <returns>An int that represents a piece</returns>
         public static int PiecePickerInputChecker(string playerIn, string player)
         {
@@ -225,14 +223,14 @@ namespace GaloDaVelha
             bool playerInpValid = true;
 
 
-            //list of conditions
+            //List of conditions
             if(playerIn.Length != 1)
                 playerInpValid = false;
             
             if(int.TryParse(playerIn, out ret) == false)
                 playerInpValid =false;
 
-            //consequence
+            //Consequence
             if(playerInpValid == false)
             {
                 Console.WriteLine("Please insert a valid Piece: (1-8)");
@@ -274,11 +272,9 @@ namespace GaloDaVelha
                             return PiecePickerInputChecker(tmpString, player);
                         }
                     }
-                }
-                
+                }                
                 return ret;
             }
-
         }
         
         /// <summary>
@@ -289,7 +285,6 @@ namespace GaloDaVelha
         public static int[] BoardPlaceInputChecker(string playerIn)
         {
             int outInt = 0;
-            char[] charLim = {'A','B','C','D'};
             int[] ret = new int[2];
             int[] tempRet = new int[2];
             bool playerInpValid = true;
@@ -388,18 +383,13 @@ namespace GaloDaVelha
 
             return player1turn;
         }
-
-
         
         /// <summary>
         /// Prints the board using the int values stored in the board array Should be callled after every move
         /// </summary>
         /// <param name="currentBoard">Array containing the values of the board</param>
         public void PrintBoard(int[,] currentBoard)
-        {   //Idea For how to print the board
-            /*Console.WriteLine($"|  ||  ||  ||  |");
-            Console.WriteLine($"--------------");*/
-
+        {   
             Console.WriteLine($"   A  B  C  D ");
 
             for(int i = 0; i < 4; i++)
@@ -429,8 +419,7 @@ namespace GaloDaVelha
 
         //position xy 0-3
         private static bool WinCondition(int[,] board, int[] position, int[] conditions)
-        {   
-            
+        {               
             bool winner = false;
 
             conditions = PieceRunthrough(conditions,position,board);
@@ -444,18 +433,17 @@ namespace GaloDaVelha
                 }
 
             }
-
            return winner;
         }
 
-         //(0square, 1circle, 2hole, 3no hole, 4big, 5small, 6white, 7black)
-         /// <summary>
-         /// Checks a piece to see what attributes it has
-         /// </summary>
-         /// <param name="conditions">A static array that holds the winning conditions</param>
-         /// <param name="piece">Int that repreents a board piece</param>
-         /// <param name="player">The player who placed that piece</param>
-         /// <returns></returns>
+        //(0square, 1circle, 2hole, 3no hole, 4big, 5small, 6white, 7black)
+        /// <summary>
+        /// Checks a piece to see what attributes it has
+        /// </summary>
+        /// <param name="conditions">A static array that holds the winning conditions</param>
+        /// <param name="piece">Int that repreents a board piece</param>
+        /// <param name="player">The player who placed that piece</param>
+        /// <returns></returns>
         public static int[] PieceConditionChecker(int[] conditions, int piece)
         {   
             //Checks conditions for pieces
@@ -559,8 +547,6 @@ namespace GaloDaVelha
                     break;
                 default:
                     break;
-
-
             }
             return conditions;
         }
@@ -673,6 +659,9 @@ namespace GaloDaVelha
                 case "2":
                     Console.WriteLine("Player 2 wins");
                     break;
+                case "D":
+                    Console.WriteLine("Draw");
+                    break;
                 default:
                     Console.WriteLine("Invalid result");
                     break;
@@ -680,6 +669,4 @@ namespace GaloDaVelha
         }
 
     }
-
-
 }
