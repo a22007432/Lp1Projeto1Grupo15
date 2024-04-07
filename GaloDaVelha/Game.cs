@@ -109,10 +109,10 @@ namespace GaloDaVelha
             int[] placement;
             string playerIn;
             int tmpN;
-            int roundCounter = 0;
+            int roundCounter = 1;
             bool player1Turn = true;
 
-            while(roundCounter < 16)
+            while(roundCounter < 17)
             {
                 if(player1Turn == true)
                 {
@@ -190,7 +190,6 @@ namespace GaloDaVelha
                 }
                 
                 roundCounter++;
-                //foreach(var i in board){Console.WriteLine(i.ToString());}
 
                 // test code.
                 if(WinCondition(board,placement,conditions))
@@ -208,7 +207,11 @@ namespace GaloDaVelha
                 }
             }
 
-            //roundCounter++;
+            if (roundCounter > 16)
+            {
+                GameResult("D");
+            }
+
         }
 
 
@@ -672,6 +675,9 @@ namespace GaloDaVelha
                     break;
                 case "2":
                     Console.WriteLine("Player 2 wins");
+                    break;
+                case "D":
+                    Console.WriteLine("Draw");
                     break;
                 default:
                     Console.WriteLine("Invalid result");
