@@ -14,13 +14,6 @@ namespace GaloDaVelha
     /// </summary>
     public class Game
     {
-        public int roundCounter = 0;
-        public Pieces mypiece = 0;
-
-        public bool isRunning;
-
-        public int tmpN;
-
         //Array to hold the board values
         static int[,] board = new int [4,4]; 
         
@@ -35,8 +28,6 @@ namespace GaloDaVelha
         public void StartGame()
         {
             PrintBoard(board);
-            Console.WriteLine("Welcome to Galo da velha here are the rules:");
-            //Write Rules (maybe even a show rules method)
             
             SetDefaultBoard(board);
             GameLoop();
@@ -63,37 +54,7 @@ namespace GaloDaVelha
         }
 
 
-        /// <summary>
-        /// This functions tests the board layout
-        /// </summary>
-        /// <param name="board">Array containing the values of the board</param>
-        /// <returns>Array containing the values of the board</returns>
-        public static int[,] SetBoardTest(int[,] board)  
-        {
-            for(int i= 0; i < 4; i++)
-            {
-                if (i < 2)
-                {
-                    for(int j = 0; j< 4; j ++)
-                    {
-                        if (i == 0){board[i,j] = j+1;}
-                        else{board[i,j] = 5+j;}
-                    }
-                }
-                else
-                {
-                    for(int j = 0; j< 4; j ++)
-                    {
-                        if (i == 2){board[i,j] = j+1;}
-                        else{board[i,j] = 5+j;}
-                    }
-                }
-
-            }
-            return board; 
-        }
-
-
+       
         /// <summary>
         /// This method returns a char from an Enum using an int as reference
         /// </summary>
