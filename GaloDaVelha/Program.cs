@@ -10,7 +10,7 @@ namespace GaloDaVelha
         /// 
         /// </summary>
         /// <param name="args"></param>
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.Clear();
@@ -19,9 +19,9 @@ namespace GaloDaVelha
 
         private static void Menu()
         {
-            //Print Main Menu Text
             Game game = new Game();
             int playerInput;
+            //Print Main Menu Text
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("  /$$$$$$            /$$                 /$$$$$$$                  /$$    /$$          /$$ /$$");
             Console.WriteLine(" /$$__  $$          | $$                | $$__  $$                | $$   | $$         | $$| $$");            
@@ -64,6 +64,8 @@ namespace GaloDaVelha
         //Rules Menu
         private static void GameRules()
         {
+            int[,] board = new int [4,4]; 
+            Game game = new Game();
             int playerInput = 0;
             
             //Print Rules
@@ -76,7 +78,18 @@ namespace GaloDaVelha
             Console.WriteLine(" containing one atribute in common or the borad is full, resulting in a tie.");
             Console.WriteLine("The line can be horizontal, vertical or diagonal. First person to form the line wins.");
             Console.WriteLine("\nExample of the board and pieces: ");
+            game.PrintBoard(board);
+            
+            Console.WriteLine("\n");
 
+            Console.Write("1 - " + (char) Pieces.BigSquare + "  ");
+            Console.Write("2 - " + (char) Pieces.SmallSquare + "  ");
+            Console.Write("3 - " + (char) Pieces.BigSquareH + "  ");
+            Console.Write("4 - " + (char) Pieces.SmallSquareH + "\n");
+            Console.Write("5 - " + (char) Pieces.BigCircle + "  ");
+            Console.Write("6 - " + (char) Pieces.SmallCircle + "  ");
+            Console.Write("7 - " + (char) Pieces.BigCircleH + "  ");
+            Console.Write("8 - " + (char) Pieces.SmallCircleH + "\n \n");
             //Go back to the Main Menu
             Console.WriteLine("[1] Go Back");
 
