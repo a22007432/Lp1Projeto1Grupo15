@@ -19,6 +19,7 @@ namespace GaloDaVelha
 
         private static void Menu()
         {
+            //Print Main Menu Text
             Game game = new Game();
             int playerInput;
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -33,6 +34,7 @@ namespace GaloDaVelha
             
             Console.ResetColor(); 
             
+            //Print Options
             Console.WriteLine("\n[1] Start game");
             Console.WriteLine("[2] Rules");
             Console.WriteLine("[3] Quit");
@@ -42,6 +44,7 @@ namespace GaloDaVelha
 
             Console.Clear();
 
+            //Read input and choose option
             if(playerInput == 1)
                 game.StartGame();
             else if (playerInput == 2)
@@ -58,12 +61,22 @@ namespace GaloDaVelha
             }
         }
 
+        //Rules Menu
         private static void GameRules()
         {
             int playerInput = 0;
             
-            Console.WriteLine("This is where the rules shall be");
+            //Print Rules
+            Console.WriteLine("The game consists of a single board 4x4 and 16 pieces.");
+            Console.WriteLine("These pieces are combinations of the following atributes: Size, Color, Form and Hole");
+            Console.WriteLine("The players takes rounds while playing, each choosing a piece to put on the board.");
+            Console.WriteLine("Once played, the pieces can't be moved again.");
+            Console.WriteLine("Your adversary chooses which piece you play and you choose where to put it.");
+            Console.WriteLine("Repeat the cycle, alternating between players until either player forms a line of four pieces containing one atribute in common or the borad is full, resulting in a tie.");
+            Console.WriteLine("The line can be horizontal, vertical or diagonal. First person to form the line wins.");
+            Console.WriteLine("Example of the board and pieces: ")
 
+            //Go back to the Main Menu
             Console.WriteLine("[1] Go Back");
 
             playerInput = int.Parse(Console.ReadLine());
