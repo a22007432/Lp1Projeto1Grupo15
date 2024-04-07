@@ -108,10 +108,6 @@ namespace GaloDaVelha
             int roundCounter = 1;
             bool player1Turn = true;
 
-<<<<<<< HEAD
-            //While there is still space in the board to play pieces 
-=======
->>>>>>> cf9a0460ae101fa4b6ccd70d2424a27a8c61c078
             while(roundCounter < 17)
             {
                 if(player1Turn == true)
@@ -206,11 +202,6 @@ namespace GaloDaVelha
             {
                 GameResult("D");
             }
-<<<<<<< HEAD
-=======
-
-        }
->>>>>>> cf9a0460ae101fa4b6ccd70d2424a27a8c61c078
 
         }
 
