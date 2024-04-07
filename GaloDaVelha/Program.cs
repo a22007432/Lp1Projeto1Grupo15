@@ -13,7 +13,7 @@ namespace GaloDaVelha
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
-            
+            Console.Clear();
             Menu();
         }
 
@@ -72,9 +72,10 @@ namespace GaloDaVelha
             Console.WriteLine("The players takes rounds while playing, each choosing a piece to put on the board.");
             Console.WriteLine("Once played, the pieces can't be moved again.");
             Console.WriteLine("Your adversary chooses which piece you play and you choose where to put it.");
-            Console.WriteLine("Repeat the cycle, alternating between players until either player forms a line of four pieces containing one atribute in common or the borad is full, resulting in a tie.");
+            Console.Write("Repeat the cycle, alternating between players until either player forms a line of four pieces");
+            Console.WriteLine(" containing one atribute in common or the borad is full, resulting in a tie.");
             Console.WriteLine("The line can be horizontal, vertical or diagonal. First person to form the line wins.");
-            Console.WriteLine("Example of the board and pieces: ")
+            Console.WriteLine("\nExample of the board and pieces: ");
 
             //Go back to the Main Menu
             Console.WriteLine("[1] Go Back");
@@ -84,6 +85,12 @@ namespace GaloDaVelha
             {
                 Console.Clear();
                 Menu();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid Input");
+                GameRules();
             }
             
         }
