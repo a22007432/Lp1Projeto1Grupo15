@@ -170,6 +170,10 @@ namespace GaloDaVelha
                         GameResult("F1");
                         break;
                     }
+                    else if(playerIn == "")
+                    {
+                        break;
+                    }
                     else
                     {
                         tmpN = PiecePickerInputChecker(playerIn, "2");
@@ -226,7 +230,7 @@ namespace GaloDaVelha
                 roundCounter++;
                 //foreach(var i in board){Console.WriteLine(i.ToString());}
 
-                isWin = WinCondition(board,tmpN,placement,conditions,playerIn);
+                isWin = WinCondition(board,placement,conditions);
                 
 
                 // test code.
@@ -396,7 +400,7 @@ namespace GaloDaVelha
                 tempRet[1] = int.Parse(tryStr)-1;
             }
 
-            if (board[tempRet[0],tempRet[1]] != 0)
+            if (board[tempRet[1],tempRet[0]] != 0)
             {
                 Console.WriteLine("This spot is already taken");
                 Console.WriteLine("Please insert a valid Postion: 'Char_Int'");
@@ -462,19 +466,18 @@ namespace GaloDaVelha
         }
 
         //position xy 0-3
-        private static bool WinCondition(int[,] board, int piece, int[] position, int[] conditions, string player)
+        private static bool WinCondition(int[,] board, int[] position, int[] conditions)
         {   
             
             bool winner = false;
 
             conditions = PieceRunthrough(conditions,position,board);
 
-
-            
             //Checks condition
             foreach(int c in conditions)
             {
                 if(c >= 4){winner = true;}
+                    Console.WriteLine($"{c}");
             }
 
            return winner;
@@ -601,37 +604,87 @@ namespace GaloDaVelha
         public static int[] PieceRunthrough(int[] conditions, int[] position, int[,] board)
         {   
             int[] pieceLine = new int[4];
-            int[] tmpCoditions;
 
-            //horizontal checker
-            for (int i = 0; i < 4; i ++)
+            for (int a = 0; a < 4; a++)
             {
-                pieceLine[i] = board[i,position[1]];
-            }
-            
-            for (int f = 0; f < pieceLine.Length; f++)
-            {
-                tmpCoditions = PieceConditionChecker(conditions,pieceLine[f]);
-
+                #region horizontal    
                 
-                conditions[0] = tmpCoditions[0];
-                conditions[1] = tmpCoditions[1];
-                conditions[2] = tmpCoditions[2];
-                conditions[3] = tmpCoditions[3];
-                conditions[4] = tmpCoditions[4];
-                conditions[5] = tmpCoditions[5];
-                conditions[6] = tmpCoditions[6];
-                conditions[7] = tmpCoditions[7];
+                //horizontal checker
+                for (int i = 0; i < 4; i ++)
+                {
+                    pieceLine[i] = board[position[1], i];
+                }
                 
-            }
-            
+                if (ConditionResult(conditions, pieceLine))
+                {
+                    return conditions;
+                } 
+                #endregion
 
-            
+                #region vertical
+                
+                //vertical checker
+                for (int i = 0; i < 4; i ++)
+                {
+                    pieceLine[i] = board[i, position[0]];
+                }
+                
+                if (ConditionResult(conditions, pieceLine))
+                {
+                    return conditions;
+                } 
+                #endregion
+
+                #region diagonal
+                //diagonal checker 00,11,22,33
+                for(int i = 0; i < 4; i ++)
+                {
+                    pieceLine[i] = board[i,i];
+                }
+                
+                if (ConditionResult(conditions, pieceLine))
+                {
+                    return conditions;
+                }
+
+                //diagonal checker 03,21,12,30~
+                
+                pieceLine[0] = board[0,3];
+                pieceLine[1] = board[2,1];
+                pieceLine[2] = board[1,2];
+                pieceLine[3] = board[3,0];
+
+                if (ConditionResult(conditions, pieceLine))
+                {
+                    return conditions;
+                } 
+
+                #endregion
+            }
             return conditions;
-
         }
 
-        
+        private static bool ConditionResult(int[] conditions, int[] pieceLine)
+        {            
+            for (int j = 0; j < 4; j ++)
+            {
+                conditions = PieceConditionChecker(conditions,pieceLine[j]);
+            }
+            
+            for (int k = 0; k < conditions.Length; k++)
+            {
+                if (conditions[k] == 4)
+                {
+                    return true;
+                }
+                else
+                {
+                    conditions[k] = 0;
+                }
+            }
+
+            return false;
+        }
 
         // Send "F(player number)" for forfeit
         // Send "1" for player 1 win
