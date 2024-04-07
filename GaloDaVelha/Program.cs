@@ -12,7 +12,7 @@ namespace GaloDaVelha
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            //Console.OutputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
             Game game = new Game();
             game.StartGame();
         }

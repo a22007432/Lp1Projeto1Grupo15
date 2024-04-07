@@ -21,23 +21,6 @@ namespace GaloDaVelha
 
         public int tmpN;
 
-        //public char tmpPiece;
-
-        //Circle CHars
-        /*public char cLargeHole = '\u25CE';
-        public char cSmallHole = '\u2609';
-        public char cLarge = '\u25CB';
-        public char cSmall = '\u25E6';
-        */
-        
-        //Square chars (large with hole might need a better 1)
-        /*public char sLargeHole = '\u2612';
-        public char sSmallHole = '\u25C8';
-        public char sLarge = '\u2610';
-        public char sSmall = '\u25C7';
-        */
-        
-
         //Array to hold the board values
         static int[,] board = new int [4,4]; 
         
@@ -56,35 +39,6 @@ namespace GaloDaVelha
             //Write Rules (maybe even a show rules method)
             
             SetDefaultBoard(board);
-            //SetBoardTest(board);
-
-            //testcode for chars
-            /*Console.WriteLine(cLargeHole);
-            Console.WriteLine(cSmallHole);
-            Console.WriteLine(cSmall);
-            Console.WriteLine(cLarge);
-            Console.WriteLine(sSmallHole);
-            Console.WriteLine(sLargeHole);
-            Console.WriteLine(sSmall);
-            Console.WriteLine(sLarge);*/
-
-            //test code for array
-            /*for(int i= 0; i < 4; i++)
-            {
-                for(int j = 0; j< 4; j ++)
-                {
-                    Console.WriteLine(board[i,j]);
-                }
-            }*/
-
-            // test code for SetPiece()
-            /*Console.WriteLine("pls insert an int");
-            tmpN = int.Parse(Console.ReadLine());
-            
-            Console.WriteLine(SetPiece(tmpN))*/
-
-
-            //PrintBoard(board);
             GameLoop();
             
             
@@ -185,7 +139,6 @@ namespace GaloDaVelha
                     break;
             }
 
-            //Console.WriteLine(tmpPiece);
             return tmpPiece;
         }
 
@@ -193,17 +146,11 @@ namespace GaloDaVelha
 
         {   
             bool isWin;
-            //[Col, Row]
             int[] placement;
             string playerIn;
             int tmpN;
             int roundCounter = 0;
             bool player1Turn = true;
-
-            /*Console.WriteLine("");
-            Console.WriteLine($"ROUND {roundCounter}:");
-            Console.WriteLine("----------------------------------------------");
-            Console.WriteLine("");*/
 
             while(roundCounter < 16)
             {
@@ -227,7 +174,6 @@ namespace GaloDaVelha
                     {
                         tmpN = PiecePickerInputChecker(playerIn, "2");
 
-                        //Console.WriteLine(SetPiece(tmpN));
                         Console.WriteLine("");
                         Console.WriteLine(
                         "Player 2, Place your piece using this format: 'column row':");
@@ -262,7 +208,6 @@ namespace GaloDaVelha
                     else
                     {
                         tmpN = PiecePickerInputChecker(playerIn, "1");
-                        //Console.WriteLine(SetPiece(tmpN));
                         Console.WriteLine("");
                         Console.WriteLine(
                         "Player 1, Place your piece using this format: 'column row':");
@@ -279,7 +224,7 @@ namespace GaloDaVelha
                 }
                 
                 roundCounter++;
-                foreach(var i in board){Console.WriteLine(i.ToString());}
+                //foreach(var i in board){Console.WriteLine(i.ToString());}
 
                 isWin = WinCondition(board,tmpN,placement,conditions,playerIn);
                 
@@ -457,6 +402,7 @@ namespace GaloDaVelha
                 Console.WriteLine("Please insert a valid Postion: 'Char_Int'");
 
                 tmpString = Console.ReadLine();
+
                 //recurring method to make sure it works
                 return BoardPlaceInputChecker(tmpString);
             }
@@ -528,7 +474,6 @@ namespace GaloDaVelha
             //Checks condition
             foreach(int c in conditions)
             {
-                //Console.WriteLine($"{c}");
                 if(c >= 4){winner = true;}
             }
 
@@ -647,40 +592,12 @@ namespace GaloDaVelha
             {
                 pieceLine[i] = board[i,position[1]];
             }
-
-            // Converter todos os checkers em metodos, ver condicões para os metodos
-            //vertical checker
-            /*for (int i = 0; i < 4; i ++)
-            {
-                pieceLine[i] = board[position[0],i];
-            }*/
-
-            //diagonal checker 00,11,22,33
-            /*for(int i = 0; i < 4; i ++)
-            {
-                pieceLine[i] = board[i,i];
-            }*/
-
-            //diagonal checker 03,21,12,30~
-            /*
-            pieceLine[0] = board[0,3];
-            pieceLine[0] = board[2,1];
-            pieceLine[0] = board[1,2];
-            pieceLine[0] = board[3,0];*/
-
-            //foreach(var i in pieceLine){Console.WriteLine(i.ToString());}
             
             for (int f = 0; f < pieceLine.Length; f++)
             {
                 tmpCoditions = PieceConditionChecker(conditions,pieceLine[f]);
 
                 
-                // problem
-                /*for (int j = 0; j<conditions.Length; j++)
-                {
-                    conditions[j] += tmpCoditions[j];
-                    Console.WriteLine($"this is cond:{conditions[j]}");
-                }*/
                 conditions[0] = tmpCoditions[0];
                 conditions[1] = tmpCoditions[1];
                 conditions[2] = tmpCoditions[2];
@@ -689,7 +606,6 @@ namespace GaloDaVelha
                 conditions[5] = tmpCoditions[5];
                 conditions[6] = tmpCoditions[6];
                 conditions[7] = tmpCoditions[7];
-                //Console.WriteLine($"this is cond:{conditions}");
                 
             }
             
