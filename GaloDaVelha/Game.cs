@@ -145,7 +145,6 @@ namespace GaloDaVelha
         public void GameLoop()
 
         {   
-            bool isWin;
             int[] placement;
             string playerIn;
             int tmpN;
@@ -185,10 +184,11 @@ namespace GaloDaVelha
                         placement = BoardPlaceInputChecker(playerIn);
                         board[placement[1],placement[0]] = tmpN;
 
+                        Console.Clear();
                         Console.WriteLine("");
                         PrintBoard(board);
 
-                        player1Turn =TurnSwitcher(player1Turn);
+                        player1Turn = TurnSwitcher(player1Turn);
                     }
 
 
@@ -220,6 +220,7 @@ namespace GaloDaVelha
                         
                         board[placement[1],placement[0]] = tmpN;
 
+                        Console.Clear();
                         Console.WriteLine("");
                         PrintBoard(board);
 
@@ -230,19 +231,19 @@ namespace GaloDaVelha
                 roundCounter++;
                 //foreach(var i in board){Console.WriteLine(i.ToString());}
 
-                isWin = WinCondition(board,placement,conditions);
-                
-
                 // test code.
-                if(isWin == true)
+                if(WinCondition(board,placement,conditions))
                 {
-                  
-                    Console.WriteLine("YOU  WON LOL");
-                    Console.WriteLine("YOU  WON LOL");
-                    Console.WriteLine("YOU  WON LOL");
-                    Console.WriteLine("YOU  WON LOL");
-                    Console.WriteLine("YOU  WON LOL");
-                    break;
+                    if (player1Turn)
+                    {
+                        GameResult("1");
+                        break;
+                    }
+                    if (!player1Turn)
+                    {
+                        GameResult("2");
+                        break;
+                    }
                 }
             }
 
@@ -476,8 +477,11 @@ namespace GaloDaVelha
             //Checks condition
             foreach(int c in conditions)
             {
-                if(c >= 4){winner = true;}
-                    Console.WriteLine($"{c}");
+                if(c >= 4)
+                {
+                    winner = true;
+                }
+
             }
 
            return winner;
@@ -692,6 +696,8 @@ namespace GaloDaVelha
         // Send "D" for draw
         private void GameResult(string result)
         {
+            Console.WriteLine();
+
             switch (result)
             {
                 case "F1":
@@ -705,9 +711,6 @@ namespace GaloDaVelha
                     break;
                 case "2":
                     Console.WriteLine("Player 2 wins");
-                    break;
-                case "D":
-                    Console.WriteLine("Draw");
                     break;
                 default:
                     Console.WriteLine("Invalid result");
